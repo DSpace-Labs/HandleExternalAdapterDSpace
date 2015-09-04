@@ -1,9 +1,19 @@
 apply plugin: 'java'
 apply plugin: 'application'
-apply plugin: 'idea'
-apply plugin: 'gradle-one-jar'
 
 mainClassName= 'org.dspace.handle.MultiRemoteDSpaceRepositoryHandlePlugin'
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile
+            .filter({! (it.name =~ /handle.*\.jar/ )})
+            .filter({! (it.name =~ /gson.*\.jar/ )})
+            .collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -12,31 +22,9 @@ repositories {
     jcenter()
 }
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
-    }
-}
-
 dependencies {
     compile 'org.dspace:handle:6.2.5.02'
-    compile 'org.apache.commons:commons-lang3:3.4'
     compile 'commons-lang:commons-lang:2.6'
     compile 'log4j:log4j:1.2.17'
     compile 'com.google.code.gson:gson:2.2.1'
-}
-
-task awesomeFunJar(type: OneJar) {
-    mainClass= mainClassName
-}
-
-jar {
-    manifest.attributes(
-            // results in "Class-Path: guava-15.0.jar"
-            'Class-Path': configurations.runtime.files.collect { it.name }.join(' '),
-            'Main-Class': mainClassName
-    )
 }
