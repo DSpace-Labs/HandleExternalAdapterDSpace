@@ -87,7 +87,7 @@ HDLHOME="/hs/hsj-7.3.1/"
 
 Stop the handle server, if its already running. Then, start the handle server:
 ```
-/hs/srv_1/start-hdl-server
+/hs/srv_1/start-hdl-server /hs/srv_1
 ```
 
 Check the handle logs for more information:
