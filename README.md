@@ -5,9 +5,14 @@ Gradle is a build automation tool (like maven). The Gradle Wrapper ./gradlew or 
 
 All DSpaces since DSpace 4 include a small web service for handle resolution:
 
-List Handle Prefix, the handle prefix for this instance: https://trydspace.longsight.com/handleresolver/listprefixes
+XMLUI: <dspace.url>/handleresolver
+JSPUI: <dspace.url>/json/hdlresolver
+
+List Handle Prefix, the handle prefix for this instance:
+http://demo.dspace.org/xmlui/handleresolver/listprefixes
+http://demo.dspace.org/jspui/json/hdlresolver/listprefixes
 ```
-["123456789"]
+["10673"]
 ```
 
 Resolve a handle. Given a handle prefix/suffix, it will return the DSpace url for that collection or item.
